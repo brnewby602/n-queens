@@ -197,7 +197,6 @@
       var rows = this.rows();
       var conflict = false;
       var count = 0;
-      debugger;
       for (var i = 0; i < rows.length; i++) {
         if (rows[i][minorDiagonalColumnIndexAtFirstRow - i] && (++count >= 2)) {
           conflict = true;
@@ -222,7 +221,32 @@
         }
       }
       return conflict;
+    },
+
+    testSolution: function(initialRowIndex, initialColIndex) {
+      var count = 1;  
+      var rows = this.rows();
+      var length = rows.length;
+
+      for (var i = 0; i < length; i++) {
+        for (var j = 0; j < length; j++) {
+          if ( i === initialRowIndex && j === initialColIndex) {
+            continue;
+          }
+          this.togglePiece(i, j);
+          if (this.hasAnyRooksConflicts()) {
+            this.togglePiece(i, j); 
+          } else {
+            count++;
+            if (count === length) {
+              return this.rows();
+            }
+          }
+        }
+        // no solution has been found
+      }
     }
+
 
     /*--------------------  End of Helper Functions  ---------------------*/
 
