@@ -171,7 +171,7 @@
     hasAnyMajorDiagonalConflicts: function() {
       // retrieve rows
       var length = this.get(0).length;
-      var startColIndex = length - (length + (length - 2));
+      var startColIndex = length - (length + (length - 3));
       // var count = 0;
       var conflict = false;
       // iterate over rows
@@ -211,7 +211,8 @@
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
       var length = this.get(0).length;
-      var startColIndex = length + (length - 2);
+      var startColIndex = length + (length - 
+        2);
       var conflict = false;
 
       for (var i = startColIndex; i > 0; i--) {
