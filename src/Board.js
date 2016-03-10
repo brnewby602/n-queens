@@ -158,7 +158,7 @@
       // iterate over rows 
       for (var i = 0; i < rows.length; i++ ) {
         // retrieve value starting at majorDiagonalColumnIndexAtFirstRow
-        if (rows[i][majorDiagonalColumnIndexAtFirstRow + i] && ++count >= 2) {
+        if (rows[i][majorDiagonalColumnIndexAtFirstRow + i] && (++count >= 2)) {
           conflict = true;
           break;
         }     
@@ -170,17 +170,21 @@
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       // retrieve rows
-      var rows = this.get(0);
-
+      var length = this.get(0).length;
+      var startColIndex = length - (length + (length - 2 ));
+      // var count = 0;
+      var conflict = false;
       // iterate over rows
+      for (var i = startColIndex; i < length; i++ ) {
         // each row, call hasMajorDiagonalConflictAt 
           // if it returns true
             // there is a conflict, return false
-
-            // colIndex equation
-              // colIndex = n - (n+(n-2));
-
-      return false; // fixme
+        if (this.hasMajorDiagonalConflictAt(i) ) { 
+          conflict = true;
+          break;
+        }
+      }
+      return conflict;
     },
 
 
