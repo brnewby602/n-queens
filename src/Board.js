@@ -6,7 +6,7 @@
 
   window.Board = Backbone.Model.extend({
 
-    initialize: function (params) {
+    initialize: function(params) {
       if (_.isUndefined(params) || _.isNull(params)) {
         console.log('Good guess! But to use the Board() constructor, you must pass it an argument in one of the following formats:');
         console.log('\t1. An object. To create an empty board of size n:\n\t\t{n: %c<num>%c} - Where %c<num> %cis the dimension of the (empty) board you wish to instantiate\n\t\t%cEXAMPLE: var board = new Board({n:5})', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: grey;');
@@ -25,7 +25,7 @@
     },
 
     togglePiece: function(rowIndex, colIndex) {
-      this.get(rowIndex)[colIndex] = + !this.get(rowIndex)[colIndex];
+      this.get(rowIndex)[colIndex] = +!this.get(rowIndex)[colIndex];
       this.trigger('change');
     },
 
@@ -62,14 +62,14 @@
     },
 
 
-/*
-         _             _     _
-     ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
-    / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
-    \__ \ || (_| | |  | |_  | | | |  __/ | |  __/_
-    |___/\__\__,_|_|   \__| |_| |_|\___|_|  \___(_)
+    /*
+             _             _     _
+         ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
+        / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
+        \__ \ || (_| | |  | |_  | | | |  __/ | |  __/_
+        |___/\__\__,_|_|   \__| |_| |_|\___|_|  \___(_)
 
- */
+     */
     /*=========================================================================
     =                 TODO: fill in these Helper Functions                    =
     =========================================================================*/
@@ -120,7 +120,7 @@
     hasColConflictAt: function(colIndex) {
       var rows = this.rows();
       var conflict = false;
-      var count = 0; 
+      var count = 0;
 
       for (var i = 0; i < rows.length; i++) {
         if (rows[i][colIndex] === 1 && (++count >= 2)) {
@@ -136,7 +136,7 @@
       var numberOfCols = this.get(0).length;
       var conflict = false;
       for (var i = 0; i < numberOfCols; i++) {
-        if ( this.hasColConflictAt(i)) {
+        if (this.hasColConflictAt(i)) {
           conflict = true;
           break;
         }
@@ -156,12 +156,12 @@
       var conflict = false;
       var count = 0;
       // iterate over rows 
-      for (var i = 0; i < rows.length; i++ ) {
+      for (var i = 0; i < rows.length; i++) {
         // retrieve value starting at majorDiagonalColumnIndexAtFirstRow
         if (rows[i][majorDiagonalColumnIndexAtFirstRow + i] && (++count >= 2)) {
           conflict = true;
           break;
-        }     
+        }
       }
 
       return conflict;
@@ -171,15 +171,15 @@
     hasAnyMajorDiagonalConflicts: function() {
       // retrieve rows
       var length = this.get(0).length;
-      var startColIndex = length - (length + (length - 2 ));
+      var startColIndex = length - (length + (length - 2));
       // var count = 0;
       var conflict = false;
       // iterate over rows
-      for (var i = startColIndex; i < length; i++ ) {
+      for (var i = startColIndex; i < length; i++) {
         // each row, call hasMajorDiagonalConflictAt 
-          // if it returns true
-            // there is a conflict, return false
-        if (this.hasMajorDiagonalConflictAt(i) ) { 
+        // if it returns true
+        // there is a conflict, return false
+        if (this.hasMajorDiagonalConflictAt(i)) {
           conflict = true;
           break;
         }
@@ -197,15 +197,15 @@
       var rows = this.rows();
       var conflict = false;
       var count = 0;
-  
-      for (var i = 0; i <= rows.length; i++) {
+      debugger;
+      for (var i = 0; i < rows.length; i++) {
         if (rows[i][minorDiagonalColumnIndexAtFirstRow - i] && (++count >= 2)) {
           conflict = true;
           break;
         }
       }
 
-      return conflict; 
+      return conflict;
     },
 
     // test if any minor diagonals on this board contain conflicts
@@ -220,7 +220,7 @@
           break;
         }
       }
-      return conflict; 
+      return conflict;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
