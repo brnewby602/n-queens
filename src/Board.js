@@ -133,7 +133,11 @@
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      var numberOfCols = this.get(0).length;
+      console.log('THIS.GET', this.get(0));
+      
+      var row = this.get(0);
+
+      var numberOfCols = row ? row.length : 0;
       var conflict = false;
       for (var i = 0; i < numberOfCols; i++) {
         if (this.hasColConflictAt(i)) {
@@ -170,8 +174,11 @@
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       // retrieve rows
-      var length = this.get(0).length;
-      var startColIndex = length - (length + (length - 3));
+      var row = this.get(0);
+      var length = row ? row.length : 0;
+      
+    
+      var startColIndex = length - (length + (length - 2));
       // var count = 0;
       var conflict = false;
       // iterate over rows
@@ -209,9 +216,10 @@
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      var length = this.get(0).length;
+      var row = this.get(0);
+      var length = row ? row.length : 0;
       var startColIndex = length + (length - 
-        2);
+        3);
       var conflict = false;
 
       for (var i = startColIndex; i > 0; i--) {
@@ -223,7 +231,7 @@
       return conflict;
     },
 
-    testSolution: function(initialRowIndex, initialColIndex) {
+    testSolution: function(initialRowIndex, initialColIndex, pieceType) {
       var count = 1;  
       var rows = this.rows();
       var length = rows.length;
@@ -234,7 +242,10 @@
             continue;
           }
           this.togglePiece(i, j);
-          if (this.hasAnyRooksConflicts()) {
+          
+          // call right conflicts function based on type
+          
+          if ( (pieceType === 'queen' && this.hasAnyQueensConflicts()) || (pieceType === 'rook' && this.hasAnyRooksConflicts())) {
             this.togglePiece(i, j); 
           } else {
             count++;
@@ -245,7 +256,16 @@
         }
         // no solution has been found
       }
-    }
+    },
+
+    boundarySolution: function(rows, length) {
+      if (length === 1) {
+        this.togglePiece(0, 0);
+        return rows;
+      } else {
+        return rows;
+      }
+    } 
 
 
     /*--------------------  End of Helper Functions  ---------------------*/
