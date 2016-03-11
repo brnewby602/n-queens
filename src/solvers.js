@@ -26,7 +26,7 @@ window.findNRooksSolution = function(n) {
     for (var j = 0; j < length; j++) {
       // toggle that cell to be initial placement
       board.togglePiece(i, j);
-      var currentTest = board.testSolution(i, j);
+      var currentTest = board.testSolution(i, j, 'rook');
       // if call test solution function is not undefined
       if (currentTest !== undefined) {
           // return solution
@@ -49,10 +49,43 @@ window.countNRooksSolutions = function(n) {
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-  var solution = undefined; //fixme
+  // var solution = undefined; //fixme
 
-  console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
-  return solution;
+  // console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
+  // return solution;
+
+  var board = new Board({n: n});
+  var rows = board.rows();
+  var length = rows.length;
+
+  if (length < 3) {
+    return board.boundarySolution(rows, length);
+  }
+  // if (length === 1) {
+  //   board.togglePiece(0, 0);
+  //   return rows;
+  // } else if (length === 0) {
+  //   return rows;
+  // }
+  // loop to create initial placement
+  for (var i = 0; i < length; i++) {
+    for (var j = 0; j < length; j++) {
+      // toggle that cell to be initial placement
+      board.togglePiece(i, j);
+      var currentTest = board.testSolution(i, j, 'queen');
+      // if call test solution function is not undefined
+      if (currentTest !== undefined) {
+          // return solution
+        return currentTest;
+      } else {
+        // clear board
+        board = new Board({n: n});
+      }
+    }
+  }  
+
+
+
 };
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
