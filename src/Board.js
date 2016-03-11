@@ -133,7 +133,7 @@
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      console.log('THIS.GET', this.get(0));
+      //console.log('THIS.GET', this.get(0));
       
       var row = this.get(0);
 
