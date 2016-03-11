@@ -41,9 +41,75 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+// - create global counter to store number of pieces on board
+  var solutionCount = 0; 
+  var matrixSize = n;
 
-  console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
+  var matrixTest = function(rowIndex, colIndex) {
+
+
+    // base case:
+    // on current cell perform the following:
+
+    // toggle piece on 
+    board.togglePiece(rowIndex, colIndex);
+
+    var conflict = board.hasAnyRooksConflicts();
+
+    //  if on last row and successfully place piece
+    if (rowIndex + 1 === matrixSize && !conflict ) {
+      // increment solution count
+      solutionCount++;
+      board.togglePiece(rowIndex, colIndex);
+
+      return;
+    }
+
+    if (conflict) {
+      //ADDED
+      board.togglePiece(rowIndex, colIndex);
+      return;
+    }
+
+    // recursive call on the next column in the row
+    // get the next rowIndex, colIndex to send into recursive function
+
+    if (board._isInBounds(rowIndex, colIndex + 1)) {
+      colIndex++;
+    } else if (board._isInBounds(rowIndex + 1, 0)) {
+      rowIndex++;
+      colIndex = 0;
+    } else {
+      return;
+    }
+
+    matrixTest(rowIndex, colIndex);
+      
+    //ADDED
+    board.togglePiece(rowIndex);
+    // ^^^^^^^^^
+
+
+  };
+  
+  // create n sized board
+  var board = new Board({n: n});
+  // iterate over board starting at origin (0.0)
+  for (var i = 0; i < matrixSize; i++) {
+    for (var j = 0; j < matrixSize; j++) {
+      // toggle that cell to be initial placement
+        
+      // call recursive function on this cell
+      matrixTest(i, j); 
+      board.togglePiece(i, j);
+
+    }
+  }  
+  
+  
+
+
+//   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
 
